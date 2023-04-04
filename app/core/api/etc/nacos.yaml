@@ -1,0 +1,9 @@
+dev:
+  Servers:
+    - Addr: 127.0.0.1
+      Port: 8848
+  Group: api-dev
+  DataID: blog-api-dev
+  NamespaceID: d7532de5-68a7-4e3d-abf1-a4344761a064
+  
+  BlogRPCGroup: rpc-dev

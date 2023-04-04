@@ -1,0 +1,80 @@
+syntax = "v1"
+
+info (
+	title:
+	desc:
+	author: "zhangphh"
+	email: "zhangphh@qq.com"
+)
+
+type GetPhotoAlbumsRequest {
+}
+
+type GetPhotoAlbumsResponse {
+	Id         int64  `json:"id"`
+	AblumCover string `json:"ablumCover"`
+	AlbumDesc  string `json:"albumDesc"`
+	AlbumName  string `json:"albumName"`
+}
+
+type (
+	ApiResponse {
+		ArticleCount  int64         `json:"articleCount"`
+		CategoryCount int64         `json:"categoryCount"`
+		TagCount      int64         `json:"tagCount"`
+		TalkCount     int64         `json:"talkCount"`
+		ViewCount     int64         `json:"viewCount"`
+		WebSiteConfig WebSiteConfig `json:"webSiteConfig"`
+	}
+
+	WebSiteConfig {
+		Name              string `json:"name"`
+		EnglishName       string `json:"englishName"`
+		Author            string `json:"author"`
+		AuthorAvatar      string `json:"authorAvatar"`
+		AuthorIntro       string `json:"authorIntro"`
+		Logo              string `json:"logo"`
+		MultiLanguages    int64  `json:"multiLanguages"`
+		Notice            string `json:"notice"`
+		WebsiteCreateTime string `json:"websiteCreateTime"`
+		BeianNumber       string `json:"beianNumber"`
+		QQLogin           int64  `json:"qqLogin"`
+		GitHub            string `json:"github"`
+		QQ                string `json:"qq"`
+		Gitee             string `json:"gitee"`
+		WeChat            string `json:"weChat"`
+		WeiBo             string `json:"weibo"`
+		Csdn              string `json:"csdn"`
+		Zhihu             string `json:"zhihu"`
+		JueJin            string `json:"juejin"`
+		Twitter           string `json:"twitter"`
+		Stackoverflow     string `json:"stackoverflow"`
+		TouristAvatar     string `json:"touristAvatar"`
+		UserAvatar        string `json:"userAvatar"`
+		IsCommentReview   int64  `json:"isCommentReview"`
+		IsEmailNotice     int64  `json:"isEmailNotice"`
+		IsReward          int64  `json:"isReward"`
+		WeiXinQRCode      string `json:"weiXinQrCode"`
+		AlipayQRCode      string `json:"alipayQrCode"`
+	}
+)
+
+type (
+	ReportResponse {
+	}
+)
+
+@server (
+	group: core
+)
+
+service core-api {
+	@handler Api
+	get / returns (ApiResponse)
+	
+	@handler GetPhotoAlbums
+	get /photos/albums(GetPhotoAlbumsRequest) returns(GetPhotoAlbumsResponse)
+	
+	@handler Report
+	post /report returns(ReportResponse)
+}
