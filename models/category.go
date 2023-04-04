@@ -10,3 +10,9 @@ type Category struct {
 func (Category) TableName() string {
 	return "category_tab"
 }
+
+type CategoryDetail struct {
+	CategoryId   int64  `gorm:"category_id"`
+	CategoryName string `gorm:"category_name"`
+	ArticleCount int64  `gorm:"article_count"`
+}

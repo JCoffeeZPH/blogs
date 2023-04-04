@@ -21,3 +21,34 @@ type Article struct {
 func (Article) TableName() string {
 	return "article_tab"
 }
+
+type ArticleCard struct {
+	Id             int64  `gorm:"id"`
+	ArticleCover   string `gorm:"articleCover"`
+	ArticleTitle   string `gorm:"articleTitle"`
+	ArticleContent string `gorm:"articleContent"`
+	IsTop          int8   `gorm:"isTop"`
+	IsFeatured     int8   `gorm:"isFeatured"`
+	Author         struct {
+		Id          int64  `gorm:"id"`
+		Email       string `gorm:"email"`
+		Nickname    string `gorm:"nickname"`
+		Avatar      string `gorm:"avatar"`
+		Intro       string `gorm:"intro"`
+		Website     string `gorm:"website"`
+		IsSubscribe int8   `gorm:"isSubscribe"`
+		IsDisable   int8   `gorm:"isDisable"`
+		CreateTime  uint32 `gorm:"createTime"`
+		UpdateTime  uint32 `gorm:"updateTime"`
+	}
+	CategoryName string `gorm:"categoryName"`
+	Tags         []struct {
+		Id         int64  `gorm:"id"`
+		TagName    string `gorm:"tagName"`
+		CreateTime uint32 `gorm:"createTime"`
+		UpdateTime uint32 `gorm:"updateTime"`
+	}
+	Status     int8   `gorm:"status"`
+	CreateTime uint32 `gorm:"createTime"`
+	UpdateTime uint32 `gorm:"updateTime"`
+}

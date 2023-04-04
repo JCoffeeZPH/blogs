@@ -3,7 +3,7 @@ package dao
 import (
 	"blogs/common/errorx"
 	"blogs/models"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type TagDao interface {
@@ -20,7 +20,7 @@ func NewTagDao() TagDao {
 	}
 }
 
-func (dao TagDaoImpl) Count() int64 {
+func (dao *TagDaoImpl) Count() int64 {
 	var count int64
 	err := dao.db.Model(&models.Tag{}).Count(&count).Error
 	if err != nil {

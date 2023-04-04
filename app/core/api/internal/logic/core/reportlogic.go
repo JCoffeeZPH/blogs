@@ -42,20 +42,27 @@ func (l *ReportLogic) Report(r *http.Request) (resp *types.ReportResponse, err e
 	md5 := utils.MD5(uuid)
 
 	if !cache.SIsMember(constants.UniqueVisitorKey, md5) {
+		updateCacheByAddress(ipAddress, md5)
+	}
+
+	return
+}
+
+func updateCacheByAddress(ipAddress string, md5 string) {
+	var province string
+	if ipAddress == "127.0.0.1" || ipAddress == "localhost" || ipAddress == "0.0.0.0" {
+		province = constants.UnknownArea
+	} else {
 		ipgo.New("./resource/ipdb/ip2region.db")
 		search, _ := ipgo.BtreeSearch(ipAddress)
 		ipSource := strings.ReplaceAll(strings.ReplaceAll(search.Region, "|0", ""), "0|", "")
 		if len(ipSource) > 0 {
-			province := getProvince(ipSource)
-			cache.HIncr(constants.VisitorsAreaDetailKey, province)
-		} else {
-			cache.HIncr(constants.VisitorsAreaDetailKey, constants.UnknownArea)
+			province = getProvince(ipSource)
 		}
-		cache.IncrCount(constants.BlogsViewCountKey)
-		cache.SAdd(constants.UniqueVisitorKey, md5)
 	}
-
-	return
+	cache.HIncr(constants.VisitorsAreaDetailKey, province)
+	cache.IncrCount(constants.BlogsViewCountKey)
+	cache.SAdd(constants.UniqueVisitorKey, md5)
 }
 
 func getProvince(ipSource string) string {

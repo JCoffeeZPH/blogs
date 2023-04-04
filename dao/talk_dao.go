@@ -3,7 +3,7 @@ package dao
 import (
 	"blogs/common/errorx"
 	"blogs/models"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type TalkDao interface {

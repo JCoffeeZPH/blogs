@@ -28,6 +28,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/report",
 				Handler: core.ReportHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/categories/all",
+				Handler: core.CategoryHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/articles/all",
+				Handler: core.GetAllArticlesHandler(serverCtx),
+			},
 		},
 	)
 }

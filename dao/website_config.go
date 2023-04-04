@@ -3,7 +3,7 @@ package dao
 import (
 	"blogs/common/errorx"
 	"blogs/models"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type WebsiteConfigDao interface {
@@ -20,7 +20,7 @@ func NewWebsiteConfigDao() WebsiteConfigDao {
 	}
 }
 
-func (dao WebsiteConfigDaoImpl) GetWebsiteConfig() models.WebsiteConfig {
+func (dao *WebsiteConfigDaoImpl) GetWebsiteConfig() models.WebsiteConfig {
 	var conf models.WebsiteConfig
 	err := dao.db.Where("id = ?", 2).First(&conf).Error
 	if err != nil {
