@@ -2,6 +2,7 @@ package core
 
 import (
 	"blogs/common/utils"
+	"blogs/models"
 	"context"
 
 	"blogs/app/core/api/internal/svc"
@@ -24,13 +25,46 @@ func NewGetAllArticlesLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 	}
 }
 
+// GetAllArticles logic
+// 1、get articles from article_tab and take out articleIds
+// 2、get tagIds from article_tag_tab according article_ids
+// 3、get tags from tag_tab by tagIds
 func (l *GetAllArticlesLogic) GetAllArticles(req *types.GetAllArticlesRequest) (*types.GetAllArticlesResponse, error) {
-	records := l.svcCtx.ArticleDao.GetAllArticles(int(req.Current), int(req.Size))
-	resp := &types.GetAllArticlesResponse{}
-	for _, record := range records {
-		tags := make([]types.Tag, 0)
-		for _, tag := range record.Tags {
-			tags = append(tags, types.Tag{
+	articles := l.svcCtx.ArticleDao.GetAllArticles(int(req.Current), int(req.Size))
+	articleIds := make([]int64, 0)
+	for _, article := range articles {
+		articleIds = append(articleIds, article.Id)
+	}
+
+	count := len(articles)
+
+	articlesTags := l.svcCtx.ArticleTagDao.GetTagIdsByArticleIds(articleIds)
+	articleTagIdMap := make(map[int64][]int64)
+	tagsIds := make([]int64, 0)
+	for _, tag := range articlesTags {
+		if _, exist := articleTagIdMap[tag.ArticleId]; !exist {
+			articleTagIdMap[tag.ArticleId] = make([]int64, 0)
+		}
+		articleTagIdMap[tag.ArticleId] = append(articleTagIdMap[tag.ArticleId], tag.TagId)
+		tagsIds = append(tagsIds, tag.TagId)
+	}
+
+	tags := l.svcCtx.TagDao.GetTagsByIds(tagsIds)
+	tagMap := make(map[int64]models.Tag)
+	for _, tag := range tags {
+		tagMap[tag.Id] = tag
+	}
+
+	userInfo := l.svcCtx.UserInfoDao.GetUserInfoById(1)
+
+	resp := &types.GetAllArticlesResponse{Count: int32(count)}
+	for _, article := range articles {
+		articleTags := make([]types.Tag, 0)
+		tagIds := articleTagIdMap[article.Id]
+
+		for _, tagId := range tagIds {
+			tag := tagMap[tagId]
+			articleTags = append(articleTags, types.Tag{
 				Id:         tag.Id,
 				TagName:    tag.TagName,
 				CreateTime: utils.TimeFormat(tag.CreateTime),
@@ -39,27 +73,27 @@ func (l *GetAllArticlesLogic) GetAllArticles(req *types.GetAllArticlesRequest) (
 		}
 
 		resp.Records = append(resp.Records, types.Record{
-			Id:           record.Id,
-			ArticleCover: record.ArticleCover,
-			ArticleTitle: record.ArticleTitle,
-			IsTop:        record.IsTop,
-			IsFeatured:   record.IsFeatured,
-			CategoryName: record.CategoryName,
-			Status:       record.Status,
-			CreateTime:   utils.TimeFormat(record.CreateTime),
-			UpdateTime:   utils.TimeFormat(record.UpdateTime),
-			Tags:         tags,
+			Id:           article.Id,
+			ArticleCover: article.ArticleCover,
+			ArticleTitle: article.ArticleTitle,
+			IsTop:        article.IsTop,
+			IsFeatured:   article.IsFeatured,
+			CategoryName: article.CategoryName,
+			Status:       article.Status,
+			CreateTime:   utils.TimeFormat(article.CreateTime),
+			UpdateTime:   utils.TimeFormat(article.UpdateTime),
+			Tags:         articleTags,
 			Author: types.Author{
-				Id:          record.Author.Id,
-				Email:       record.Author.Email,
-				Nickname:    record.Author.Nickname,
-				Avatar:      record.Author.Avatar,
-				Intro:       record.Author.Intro,
-				Website:     record.Author.Website,
-				IsSubscribe: record.Author.IsSubscribe,
-				IsDisable:   record.Author.IsDisable,
-				CreateTime:  utils.TimeFormat(record.Author.CreateTime),
-				UpdateTime:  utils.TimeFormat(record.Author.UpdateTime),
+				Id:          userInfo.Id,
+				Email:       userInfo.Email,
+				Nickname:    userInfo.Nickname,
+				Avatar:      userInfo.Avatar,
+				Intro:       userInfo.Intro,
+				Website:     userInfo.Website,
+				IsSubscribe: userInfo.IsSubscribe,
+				IsDisable:   userInfo.IsDisable,
+				CreateTime:  utils.TimeFormat(userInfo.CreateTime),
+				UpdateTime:  utils.TimeFormat(userInfo.UpdateTime),
 			},
 		})
 	}

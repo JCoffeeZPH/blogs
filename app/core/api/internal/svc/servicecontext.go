@@ -16,6 +16,8 @@ type ServiceContext struct {
 	TagDao           dao.TagDao
 	WebsiteConfigDao dao.WebsiteConfigDao
 	TalkDao          dao.TalkDao
+	UserInfoDao      dao.UserInfoDao
+	ArticleTagDao    dao.ArticleTagDao
 }
 
 func NewServiceContext(c config.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
@@ -31,5 +33,7 @@ func NewServiceContext(c config.Config, nc *commonConfig.NacosServerConfig) *Ser
 		TagDao:           dao.NewTagDao(),
 		WebsiteConfigDao: dao.NewWebsiteConfigDao(),
 		TalkDao:          dao.NewTalkDao(),
+		UserInfoDao:      dao.NewUserInfoDaoDao(),
+		ArticleTagDao:    dao.NewArticleTagDao(),
 	}
 }

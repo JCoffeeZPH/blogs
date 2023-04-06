@@ -8,6 +8,7 @@ import (
 
 type TagDao interface {
 	Count() int64
+	GetTagsByIds(tagIds []int64) []models.Tag
 }
 
 type TagDaoImpl struct {
@@ -27,4 +28,13 @@ func (dao *TagDaoImpl) Count() int64 {
 		panic(errorx.DBError{Err: err})
 	}
 	return count
+}
+
+func (dao *TagDaoImpl) GetTagsByIds(tagIds []int64) []models.Tag {
+	var tags []models.Tag
+	if err := dao.db.Distinct().Where("id in (?)", tagIds).Find(&tags).Error; err != nil {
+		panic(errorx.DBError{Err: err})
+	}
+
+	return tags
 }

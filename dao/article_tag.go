@@ -8,6 +8,7 @@ import (
 
 type ArticleTagDao interface {
 	Count() int64
+	GetTagIdsByArticleIds(articleIds []int64) []models.ArticleTag
 }
 
 type ArticleTagDaoImpl struct {
@@ -27,4 +28,13 @@ func (dao *ArticleTagDaoImpl) Count() int64 {
 		panic(errorx.DBError{Err: err})
 	}
 	return count
+}
+
+func (dao *ArticleTagDaoImpl) GetTagIdsByArticleIds(articleIds []int64) []models.ArticleTag {
+	var articleTag []models.ArticleTag
+	if err := dao.db.Where("article_id in (?)", articleIds).Find(&articleTag).Error; err != nil {
+		panic(errorx.DBError{Err: err})
+	}
+
+	return articleTag
 }
