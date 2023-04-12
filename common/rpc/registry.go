@@ -40,7 +40,7 @@ func NewZrpcClient(serverName, clientName string, nacosConfig *config.NacosServe
 		//Target: fmt.Sprintf("nacos://%s:%d/%s?timeout=%s&namespace_id=%s&group_name=%s&app_name=%s",
 		//	instance.Ip, instance.Port, serverName, "3s", constants.GetNamespace(env).ToString(), nacosConfig.Group, clientName),
 
-		Target: fmt.Sprintf("nacos://%s:%d/%s?timeout=%s&namespace_id=%s&group_name=%s&app_name=%s", nacosConfig.Servers[0].Addr, nacosConfig.Servers[0].Port, serverName, "3s", nacosConfig.NameSpaceID, nacosConfig.BlogRPCGroup, clientName),
+		Target: fmt.Sprintf("nacos://%s:%d/%s?timeout=%s&namespace_id=%s&group_name=%s&app_name=%s", nacosConfig.Servers[0].Addr, nacosConfig.Servers[0].Port, serverName, "3s", nacosConfig.NameSpaceID, nacosConfig.RPCGroup, clientName),
 	})
 }
 

@@ -1,4 +1,4 @@
-package models
+package db
 
 type UniqueView struct {
 	Id         int64  `gorm:"id"`

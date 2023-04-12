@@ -2,7 +2,7 @@ package dao
 
 import (
 	"blogs/common/errorx"
-	"blogs/models"
+	"blogs/models/db"
 	"gorm.io/gorm"
 )
 
@@ -22,7 +22,7 @@ func NewTalkDao() TalkDao {
 
 func (dao *TalkDaoImpl) Count() int64 {
 	var count int64
-	err := dao.db.Model(&models.Talk{}).Count(&count).Error
+	err := dao.db.Model(&db.Talk{}).Count(&count).Error
 	if err != nil {
 		panic(errorx.DBError{Err: err})
 	}

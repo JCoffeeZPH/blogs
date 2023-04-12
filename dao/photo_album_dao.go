@@ -2,12 +2,12 @@ package dao
 
 import (
 	"blogs/common/errorx"
-	"blogs/models"
+	"blogs/models/db"
 	"gorm.io/gorm"
 )
 
 type PhotoAlbumDao interface {
-	GetPhotoAlbums(offset, limit int64) []models.PhotoAlbum
+	GetPhotoAlbums(offset, limit int64) []db.PhotoAlbum
 }
 
 type PhotoAlbumDaoImpl struct {
@@ -20,8 +20,8 @@ func NewPhotoAlbumDao() PhotoAlbumDao {
 	}
 }
 
-func (dao *PhotoAlbumDaoImpl) GetPhotoAlbums(offset, limit int64) []models.PhotoAlbum {
-	var albums []models.PhotoAlbum
+func (dao *PhotoAlbumDaoImpl) GetPhotoAlbums(offset, limit int64) []db.PhotoAlbum {
+	var albums []db.PhotoAlbum
 	err := dao.db.Where("is_delete = ? and status = ?", 0, 1).Offset(int(offset)).Limit(int(limit)).Find(&albums).Error
 	if err != nil {
 		panic(errorx.DBError{Err: err})

@@ -2,12 +2,12 @@ package dao
 
 import (
 	"blogs/common/errorx"
-	"blogs/models"
+	"blogs/models/db"
 	"gorm.io/gorm"
 )
 
 type UserInfoDao interface {
-	GetUserInfoById(userId int64) models.UserInfo
+	GetUserInfoById(userId int64) db.UserInfo
 }
 
 type UserInfoDaoImpl struct {
@@ -20,8 +20,8 @@ func NewUserInfoDaoDao() UserInfoDao {
 	}
 }
 
-func (dao *UserInfoDaoImpl) GetUserInfoById(userId int64) models.UserInfo {
-	userInfo := models.UserInfo{}
+func (dao *UserInfoDaoImpl) GetUserInfoById(userId int64) db.UserInfo {
+	userInfo := db.UserInfo{}
 	if err := dao.db.Where("id = ?", userId).First(&userInfo).Error; err != nil {
 		panic(errorx.DBError{Err: err})
 	}

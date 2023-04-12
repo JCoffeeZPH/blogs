@@ -1,4 +1,4 @@
-package models
+package db
 
 type ArticleTag struct {
 	Id        int64 `gorm:"id"`

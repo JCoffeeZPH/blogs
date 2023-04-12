@@ -1,14 +1,13 @@
 package svc
 
 import (
-	"blogs/app/core/api/internal/config"
 	commonConfig "blogs/common/config"
 	"blogs/dao"
 	"blogs/lib/cache"
 )
 
 type ServiceContext struct {
-	Config config.Config
+	Config commonConfig.Config
 	//BlogClient blogclient.Blog
 	PhotoAlbumDao    dao.PhotoAlbumDao
 	ArticleDao       dao.ArticleDao
@@ -20,7 +19,7 @@ type ServiceContext struct {
 	ArticleTagDao    dao.ArticleTagDao
 }
 
-func NewServiceContext(c config.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
+func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
 	dao.InitGorm(c.Mysql.UserName, c.Mysql.Password, c.Mysql.Host, c.Mysql.DatabaseName, c.Mysql.Port)
 	cache.InitRedis(c.Redis.Host, c.Redis.Password, c.Redis.Port, c.Redis.DB, c.Redis.PoolSize, c.Redis.MinIdleConns, c.Redis.MaxRetries)
 

@@ -10,6 +10,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 	"github.com/spf13/viper"
 	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 	"gopkg.in/yaml.v2"
 	"io"
 	"log"
@@ -23,13 +24,37 @@ var (
 	env          string
 )
 
+type Config struct {
+	rest.RestConf
+	Mysql MysqlConfig `yaml:"mysql"`
+	Redis RedisConfig `yaml:"redis"`
+}
+
+type MysqlConfig struct {
+	UserName     string
+	Password     string
+	Host         string
+	Port         uint64
+	DatabaseName string
+}
+
+type RedisConfig struct {
+	Host         string
+	Port         int
+	Password     string
+	DB           int
+	PoolSize     int
+	MinIdleConns int
+	MaxRetries   int
+}
+
 type NacosServerConfig struct {
-	Servers      []Server
-	Group        string
-	DataID       string
-	ExtDataIDs   []string
-	NameSpaceID  string
-	BlogRPCGroup string
+	Servers     []Server
+	Group       string
+	DataID      string
+	ExtDataIDs  []string
+	NameSpaceID string
+	RPCGroup    string
 }
 
 type Server struct {

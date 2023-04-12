@@ -2,12 +2,12 @@ package dao
 
 import (
 	"blogs/common/errorx"
-	"blogs/models"
+	"blogs/models/db"
 	"gorm.io/gorm"
 )
 
 type WebsiteConfigDao interface {
-	GetWebsiteConfig() models.WebsiteConfig
+	GetWebsiteConfig() db.WebsiteConfig
 }
 
 type WebsiteConfigDaoImpl struct {
@@ -20,8 +20,8 @@ func NewWebsiteConfigDao() WebsiteConfigDao {
 	}
 }
 
-func (dao *WebsiteConfigDaoImpl) GetWebsiteConfig() models.WebsiteConfig {
-	var conf models.WebsiteConfig
+func (dao *WebsiteConfigDaoImpl) GetWebsiteConfig() db.WebsiteConfig {
+	var conf db.WebsiteConfig
 	err := dao.db.Where("id = ?", 2).First(&conf).Error
 	if err != nil {
 		panic(errorx.DBError{Err: err})

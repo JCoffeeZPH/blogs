@@ -2,7 +2,7 @@ package core
 
 import (
 	"blogs/common/utils"
-	"blogs/models"
+	"blogs/models/db"
 	"context"
 
 	"blogs/app/core/api/internal/svc"
@@ -50,7 +50,7 @@ func (l *GetAllArticlesLogic) GetAllArticles(req *types.GetAllArticlesRequest) (
 	}
 
 	tags := l.svcCtx.TagDao.GetTagsByIds(tagsIds)
-	tagMap := make(map[int64]models.Tag)
+	tagMap := make(map[int64]db.Tag)
 	for _, tag := range tags {
 		tagMap[tag.Id] = tag
 	}

@@ -1,18 +1,20 @@
 package main
 
 import (
-	"blogs/app/core/api/internal/handler"
-	"blogs/app/core/api/internal/svc"
 	commonConfig "blogs/common/config"
 	"flag"
 	"fmt"
-	"github.com/zeromicro/go-zero/rest"
 	"log"
+
+	"blogs/app/admin/api/internal/handler"
+	"blogs/app/admin/api/internal/svc"
+
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var (
-	nacosConfigFile = "app/core/api/etc/nacos.yaml"
-	configFile      = "app/core/api/etc/config.yaml"
+	nacosConfigFile = "app/admin/api/etc/nacos.yaml"
+	configFile      = "app/admin/api/etc/config.yaml"
 )
 
 func main() {

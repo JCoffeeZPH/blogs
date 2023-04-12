@@ -2,13 +2,13 @@ package dao
 
 import (
 	"blogs/common/errorx"
-	"blogs/models"
+	"blogs/models/db"
 	"gorm.io/gorm"
 )
 
 type ArticleDao interface {
 	Count() int64
-	GetAllArticles(current, size int) []models.ArticleWithCategory
+	GetAllArticles(current, size int) []db.ArticleWithCategory
 }
 
 type ArticleDaoImpl struct {
@@ -23,15 +23,15 @@ func NewArticleDao() ArticleDao {
 
 func (dao *ArticleDaoImpl) Count() int64 {
 	var count int64
-	err := dao.db.Model(&models.Article{}).Where("is_delete = ?", 0).Count(&count).Error
+	err := dao.db.Model(&db.Article{}).Where("is_delete = ?", 0).Count(&count).Error
 	if err != nil {
 		panic(errorx.DBError{Err: err})
 	}
 	return count
 }
 
-func (dao *ArticleDaoImpl) GetAllArticles(current, size int) []models.ArticleWithCategory {
-	var records []models.ArticleWithCategory
+func (dao *ArticleDaoImpl) GetAllArticles(current, size int) []db.ArticleWithCategory {
+	var records []db.ArticleWithCategory
 
 	err := dao.db.Table("article_tab article").Select("article.id, "+
 		"article.user_id, "+

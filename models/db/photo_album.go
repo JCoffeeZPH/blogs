@@ -1,4 +1,4 @@
-package models
+package db
 
 type PhotoAlbum struct {
 	Id         int64  `gorm:"id"`          // 主键

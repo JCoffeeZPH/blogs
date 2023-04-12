@@ -1,4 +1,4 @@
-package models
+package db
 
 type Talk struct {
 	Id         int64  `gorm:"id"`

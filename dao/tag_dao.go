@@ -2,13 +2,13 @@ package dao
 
 import (
 	"blogs/common/errorx"
-	"blogs/models"
+	"blogs/models/db"
 	"gorm.io/gorm"
 )
 
 type TagDao interface {
 	Count() int64
-	GetTagsByIds(tagIds []int64) []models.Tag
+	GetTagsByIds(tagIds []int64) []db.Tag
 }
 
 type TagDaoImpl struct {
@@ -23,15 +23,15 @@ func NewTagDao() TagDao {
 
 func (dao *TagDaoImpl) Count() int64 {
 	var count int64
-	err := dao.db.Model(&models.Tag{}).Count(&count).Error
+	err := dao.db.Model(&db.Tag{}).Count(&count).Error
 	if err != nil {
 		panic(errorx.DBError{Err: err})
 	}
 	return count
 }
 
-func (dao *TagDaoImpl) GetTagsByIds(tagIds []int64) []models.Tag {
-	var tags []models.Tag
+func (dao *TagDaoImpl) GetTagsByIds(tagIds []int64) []db.Tag {
+	var tags []db.Tag
 	if err := dao.db.Distinct().Where("id in (?)", tagIds).Find(&tags).Error; err != nil {
 		panic(errorx.DBError{Err: err})
 	}
