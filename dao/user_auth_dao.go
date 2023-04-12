@@ -8,6 +8,7 @@ import (
 
 type UserAuthDao interface {
 	GetUserInfo(username, password string) *db.UserDetails
+	Update(id int64, params map[string]interface{})
 }
 
 type UserAuthDaoImpl struct {
@@ -43,4 +44,11 @@ func (dao *UserAuthDaoImpl) GetUserInfo(username, password string) *db.UserDetai
 		panic(errorx.DBError{Err: err})
 	}
 	return &userDetails
+}
+
+func (dao *UserAuthDaoImpl) Update(id int64, params map[string]interface{}) {
+	err := dao.db.Model(&db.UserAuth{}).Where("id = ?", id).Updates(params).Error
+	if err != nil {
+		panic(errorx.DBError{Err: err})
+	}
 }

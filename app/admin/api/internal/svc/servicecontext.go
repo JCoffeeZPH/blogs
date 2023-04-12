@@ -1,14 +1,17 @@
 package svc
 
 import (
+	"blogs/app/admin/api/internal/middleware"
 	commonConfig "blogs/common/config"
 	"blogs/dao"
 	"blogs/lib/cache"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 type ServiceContext struct {
 	Config      commonConfig.Config
 	UserAuthDao dao.UserAuthDao
+	AuthToken   rest.Middleware
 }
 
 func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
@@ -18,5 +21,6 @@ func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig
 	return &ServiceContext{
 		Config:      c,
 		UserAuthDao: dao.NewUserAuthDao(),
+		AuthToken:   middleware.NewAuthTokenMiddleware().Handle,
 	}
 }

@@ -28,6 +28,11 @@ type LoginResponse {
 	Website       string `json:"website"`
 }
 
+@server(
+	prefix: admin
+	middleware: AuthToken
+)
+
 service admin-api {
 	@handler Login
 	post /users/login(LoginRequest) returns (LoginResponse)
