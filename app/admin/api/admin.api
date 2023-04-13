@@ -51,4 +51,7 @@ service admin-api {
 	
 	@handler UserMenus
 	get /user/menus returns (GetMenusResponse)
+	
+	@handler Report
+	post /report
 }

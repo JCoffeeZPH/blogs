@@ -1,12 +1,11 @@
-package core
+package logic
 
 import (
-	"blogs/app/core/api/internal/svc"
-	"blogs/app/core/api/internal/types"
 	"blogs/common/report"
 	"context"
 	"net/http"
 
+	"blogs/app/admin/api/internal/svc"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -24,7 +23,7 @@ func NewReportLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ReportLogi
 	}
 }
 
-func (l *ReportLogic) Report(r *http.Request) (resp *types.ReportResponse, err error) {
+func (l *ReportLogic) Report(r *http.Request) error {
 	report.Report(r)
-	return
+	return nil
 }

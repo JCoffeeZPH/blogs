@@ -24,6 +24,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/user/menus",
 					Handler: UserMenusHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/report",
+					Handler: ReportHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/admin"),
