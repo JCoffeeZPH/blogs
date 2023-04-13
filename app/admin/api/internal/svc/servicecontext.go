@@ -9,9 +9,12 @@ import (
 )
 
 type ServiceContext struct {
-	Config      commonConfig.Config
+	Config commonConfig.Config
+
+	AuthToken rest.Middleware
+
 	UserAuthDao dao.UserAuthDao
-	AuthToken   rest.Middleware
+	MenuDao     dao.MenuDao
 }
 
 func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
@@ -19,8 +22,11 @@ func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig
 	cache.InitRedis(c.Redis.Host, c.Redis.Password, c.Redis.Port, c.Redis.DB, c.Redis.PoolSize, c.Redis.MinIdleConns, c.Redis.MaxRetries)
 
 	return &ServiceContext{
-		Config:      c,
+		Config: c,
+
+		AuthToken: middleware.NewAuthTokenMiddleware().Handle,
+
 		UserAuthDao: dao.NewUserAuthDao(),
-		AuthToken:   middleware.NewAuthTokenMiddleware().Handle,
+		MenuDao:     dao.NewMenuDao(),
 	}
 }

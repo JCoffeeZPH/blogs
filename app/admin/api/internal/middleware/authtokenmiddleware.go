@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"blogs/common/constants"
 	"blogs/common/errorx"
 	"blogs/common/utils"
 	"blogs/lib/cache"
@@ -34,7 +35,7 @@ func (m *AuthTokenMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		if s == nil {
 			panic(errorx.Unauthorized)
 		}
-		auth(jwtToken, s)
+		auth(jwtToken, s, r)
 		next(w, r)
 	}
 }
@@ -49,14 +50,16 @@ func getJwtToken(r *http.Request) string {
 	}
 }
 
-func auth(jwtToken string, s *sess.Session) {
+func auth(jwtToken string, s *sess.Session, r *http.Request) {
 	if !verifyJwtToken(jwtToken, s.Secret) {
 		panic(errorx.Unauthorized)
 	}
 
 	s.LastLoginTime = uint32(time.Now().Unix())
 	go cache.SaveSessionIntoRedis(s)
-	// todo 投递消息队列更新数据库
+	// todo 投递消息队列更新数据库user_info_tab的last_login_time
+
+	setHeader(r, s)
 }
 
 func verifyJwtToken(jwtToken, secret string) bool {
@@ -74,4 +77,8 @@ func verifyJwtToken(jwtToken, secret string) bool {
 	} else {
 		return true
 	}
+}
+
+func setHeader(r *http.Request, s *sess.Session) {
+	r.Header.Set(constants.UserId, fmt.Sprintf("%d", s.UserId))
 }

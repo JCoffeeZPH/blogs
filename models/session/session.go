@@ -1,5 +1,10 @@
 package session
 
+import (
+	"net/http"
+	"strconv"
+)
+
 type Session struct {
 	SessionId     string `json:"session_id"`
 	UserId        int64  `json:"user_id"`
@@ -15,4 +20,16 @@ type Session struct {
 	IsSubscribe   int8   `json:"is_subscribe"`
 	LoginType     int8   `json:"login_type"`
 	Website       string `json:"website"`
+}
+
+func GetInt64(r *http.Request, key string) int64 {
+	v := r.Header.Get(key)
+	if len(v) == 0 {
+		return -1
+	}
+	val, err := strconv.ParseInt(v, 10, 64)
+	if err != nil {
+		return -1
+	}
+	return val
 }

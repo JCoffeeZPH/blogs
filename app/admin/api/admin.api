@@ -28,6 +28,18 @@ type LoginResponse {
 	Website       string `json:"website"`
 }
 
+type (
+	GetMenusResponse {
+		Name      string             `json:"name"`
+		Path      string             `json:"path"`
+		Component string             `json:"component"`
+		Icon      string             `json:"icon"`
+		Hidden    bool               `json:"hidden"`
+		OrderNum  int32              `json:"orderNum"`
+		Children  []GetMenusResponse `json:"children"`
+	}
+)
+
 @server(
 	prefix: admin
 	middleware: AuthToken
@@ -36,4 +48,7 @@ type LoginResponse {
 service admin-api {
 	@handler Login
 	post /users/login(LoginRequest) returns (LoginResponse)
+	
+	@handler UserMenus
+	get /user/menus returns (GetMenusResponse)
 }

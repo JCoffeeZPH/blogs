@@ -21,3 +21,13 @@ type LoginResponse struct {
 	Username      string `json:"username"`
 	Website       string `json:"website"`
 }
+
+type GetMenusResponse struct {
+	Name      string             `json:"name"`
+	Path      string             `json:"path"`
+	Component string             `json:"component"`
+	Icon      string             `json:"icon"`
+	Hidden    bool               `json:"hidden"`
+	OrderNum  int32              `json:"orderNum"`
+	Children  []GetMenusResponse `json:"children"`
+}
