@@ -8,6 +8,7 @@ import (
 
 type UserInfoDao interface {
 	GetUserInfoById(userId int64) db.UserInfo
+	CountUser(param map[string]interface{}) int64
 }
 
 type UserInfoDaoImpl struct {
@@ -27,4 +28,13 @@ func (dao *UserInfoDaoImpl) GetUserInfoById(userId int64) db.UserInfo {
 	}
 
 	return userInfo
+}
+
+func (dao *UserInfoDaoImpl) CountUser(param map[string]interface{}) int64 {
+	var count int64
+	err := dao.db.Model(&db.UserInfo{}).Where(param).Count(&count).Error
+	if err != nil {
+		panic(errorx.DBError{Err: err})
+	}
+	return count
 }

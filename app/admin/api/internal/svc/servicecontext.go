@@ -14,7 +14,10 @@ type ServiceContext struct {
 	AuthToken rest.Middleware
 
 	UserAuthDao dao.UserAuthDao
+	UserInfoDao dao.UserInfoDao
 	MenuDao     dao.MenuDao
+	CommentDao  dao.CommentDao
+	ArticleDao  dao.ArticleDao
 }
 
 func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
@@ -27,6 +30,9 @@ func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig
 		AuthToken: middleware.NewAuthTokenMiddleware().Handle,
 
 		UserAuthDao: dao.NewUserAuthDao(),
+		UserInfoDao: dao.NewUserInfoDaoDao(),
 		MenuDao:     dao.NewMenuDao(),
+		CommentDao:  dao.NewCommentDao(),
+		ArticleDao:  dao.NewArticleDao(),
 	}
 }

@@ -8,7 +8,7 @@ dev:
     Port: 3306
     Username: root
     Password: zhangphh=520
-    DatabaseName: blog
+    DatabaseName: zhangphh_blogs
   
   Redis:
     Host: 127.0.0.1

@@ -3,6 +3,7 @@ package logic
 import (
 	"blogs/app/admin/api/internal/svc"
 	"blogs/app/admin/api/internal/types"
+	"blogs/common/constants"
 	"blogs/common/errorx"
 	"blogs/common/utils"
 	"blogs/lib/cache"
@@ -37,6 +38,10 @@ func (l *LoginLogic) Login(req *types.LoginRequest, jwtToken string) (*types.Log
 
 	if session == nil {
 		user := l.svcCtx.UserAuthDao.GetUserInfo(req.Username, req.Password)
+		if user.RoleId > int8(constants.TestAccount) {
+			panic(errorx.Unauthorized)
+		}
+
 		if user == nil {
 			logx.Errorf("VerifyToken not found user")
 			panic(errorx.NotFound)

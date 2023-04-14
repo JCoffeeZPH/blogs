@@ -40,6 +40,55 @@ type (
 	}
 )
 
+type (
+	GetAreaDataRequest {
+		Type int64 `form:"type"`
+	}
+
+	GetAreaDataResponse {
+		Name  string `json:"name"`
+		Value int64  `json:"value"`
+	}
+)
+
+type (
+	GetSysInfoResponse {
+		ViewCount    int64         `json:"viewCount"`
+		MessageCount int64         `json:"messageCount"`
+		UserCount    int64         `json:"userCount"`
+		ArticleCount int64         `json:"articleCount"`
+		Categories   []Category    `json:"categories"`
+		Tags         []Tag         `json:"tags"`
+		ArticleStats []ArticleStat `json:"articleStats"`
+		UniqueViews  []UniqueView  `json:"uniqueViews"`
+		ArticleRanks []ArticleRank `json:"articleRanks"`
+	}
+
+	Category {
+		Id           int64  `json:"id"`
+		CategoryName string `json:"categoryName"`
+		ArticleCount int64  `json:"articleCount"`
+	}
+	Tag {
+		Id      int64  `json:"id"`
+		TagName string `json:"tagName"`
+		Count   int64  `json:"count"`
+	}
+	ArticleStat {
+		Date  string `json:"date"`
+		Count int64  `json:"count"`
+	}
+	UniqueView {
+		Day        string `json:"day"`
+		ViewsCount int64  `json:"viewsCount"`
+	}
+
+	ArticleRank {
+		ArticleTitle string `json:"articleTitle"`
+		ViewsCount   int64  `json:"viewsCount"`
+	}
+)
+
 @server(
 	prefix: admin
 	middleware: AuthToken
@@ -54,4 +103,10 @@ service admin-api {
 	
 	@handler Report
 	post /report
+	
+	@handler AreaData
+	get /users/area (GetAreaDataRequest) returns (GetAreaDataResponse)
+	
+	@handler SysInfo
+	get / returns(GetSysInfoResponse)
 }

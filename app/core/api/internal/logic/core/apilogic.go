@@ -28,7 +28,7 @@ func NewApiLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ApiLogic {
 
 func (l *ApiLogic) Api() (*types.ApiResponse, error) {
 	resp := &types.ApiResponse{}
-	articleCount := l.svcCtx.ArticleDao.Count()
+	articleCount := l.svcCtx.ArticleDao.Count(map[string]interface{}{"is_delete": constants.ArticleStatusNotDelete})
 	tagCount := l.svcCtx.TagDao.Count()
 	categoryCount := l.svcCtx.CategoryDao.Count()
 	talkCount := l.svcCtx.TalkDao.Count()
@@ -49,7 +49,7 @@ func (l *ApiLogic) Api() (*types.ApiResponse, error) {
 	resp.TagCount = tagCount
 	resp.CategoryCount = categoryCount
 	resp.TalkCount = talkCount
-	resp.ViewCount = int64(viewCount)
+	resp.ViewCount = viewCount
 
 	websiteConfig := types.WebSiteConfig{}
 

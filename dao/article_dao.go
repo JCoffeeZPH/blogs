@@ -7,7 +7,7 @@ import (
 )
 
 type ArticleDao interface {
-	Count() int64
+	Count(param map[string]interface{}) int64
 	GetAllArticles(current, size int) []db.ArticleWithCategory
 }
 
@@ -21,9 +21,9 @@ func NewArticleDao() ArticleDao {
 	}
 }
 
-func (dao *ArticleDaoImpl) Count() int64 {
+func (dao *ArticleDaoImpl) Count(param map[string]interface{}) int64 {
 	var count int64
-	err := dao.db.Model(&db.Article{}).Where("is_delete = ?", 0).Count(&count).Error
+	err := dao.db.Model(&db.Article{}).Where(param).Count(&count).Error
 	if err != nil {
 		panic(errorx.DBError{Err: err})
 	}

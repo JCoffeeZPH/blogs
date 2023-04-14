@@ -14,6 +14,9 @@ const (
 	UnknownArea = "未知"
 	DefaultArea = "广东省"
 	AreaSuffix  = "省"
+
+	DataAreaVisitorType = 1
+	DataAreaUserType    = 0
 )
 
 var namespaceMap = map[string]Namespace{

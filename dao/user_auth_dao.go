@@ -9,6 +9,7 @@ import (
 type UserAuthDao interface {
 	GetUserInfo(username, password string) *db.UserDetails
 	Update(id int64, params map[string]interface{})
+	CountUser(param map[string]interface{}) int64
 }
 
 type UserAuthDaoImpl struct {
@@ -51,4 +52,13 @@ func (dao *UserAuthDaoImpl) Update(id int64, params map[string]interface{}) {
 	if err != nil {
 		panic(errorx.DBError{Err: err})
 	}
+}
+
+func (dao *UserAuthDaoImpl) CountUser(param map[string]interface{}) int64 {
+	var count int64
+	err := dao.db.Model(&db.UserAuth{}).Where(param).Count(&count).Error
+	if err != nil {
+		panic(errorx.DBError{Err: err})
+	}
+	return count
 }

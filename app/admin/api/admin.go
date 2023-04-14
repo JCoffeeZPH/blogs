@@ -36,3 +36,34 @@ func main() {
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }
+
+type T struct {
+	Data struct {
+		ViewsCount   int `json:"viewsCount"`
+		MessageCount int `json:"messageCount"`
+		UserCount    int `json:"userCount"`
+		ArticleCount int `json:"articleCount"`
+		CategoryDTOs []struct {
+			Id           int    `json:"id"`
+			CategoryName string `json:"categoryName"`
+			ArticleCount int    `json:"articleCount"`
+		} `json:"categoryDTOs"`
+		TagDTOs []struct {
+			Id      int         `json:"id"`
+			TagName string      `json:"tagName"`
+			Count   interface{} `json:"count"`
+		} `json:"tagDTOs"`
+		ArticleStatisticsDTOs []struct {
+			Date  string `json:"date"`
+			Count int    `json:"count"`
+		} `json:"articleStatisticsDTOs"`
+		UniqueViewDTOs []struct {
+			Day        string `json:"day"`
+			ViewsCount int    `json:"viewsCount"`
+		} `json:"uniqueViewDTOs"`
+		ArticleRankDTOs []struct {
+			ArticleTitle string `json:"articleTitle"`
+			ViewsCount   int    `json:"viewsCount"`
+		} `json:"articleRankDTOs"`
+	} `json:"data"`
+}
