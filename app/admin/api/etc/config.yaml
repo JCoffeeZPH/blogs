@@ -14,7 +14,7 @@ dev:
     Host: 127.0.0.1
     Port: 6379
     Password: ""
-    DB: 1
+    DB: 0
     PoolSize: 10
     MinIdleConns: 3
     MaxRetries: 3
