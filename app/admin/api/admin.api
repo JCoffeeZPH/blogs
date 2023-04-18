@@ -53,7 +53,7 @@ type (
 
 type (
 	GetSysInfoResponse {
-		ViewCount    int64         `json:"viewCount"`
+		ViewsCount   int64         `json:"viewsCount"`
 		MessageCount int64         `json:"messageCount"`
 		UserCount    int64         `json:"userCount"`
 		ArticleCount int64         `json:"articleCount"`
@@ -72,7 +72,6 @@ type (
 	Tag {
 		Id      int64  `json:"id"`
 		TagName string `json:"tagName"`
-		Count   int64  `json:"count"`
 	}
 	ArticleStat {
 		Date  string `json:"date"`

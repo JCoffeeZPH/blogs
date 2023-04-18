@@ -24,3 +24,7 @@ func GetLast7DayTime() []uint32 {
 	}
 	return datetime
 }
+
+func TimeFormatDay(timestamp uint32) string {
+	return time.Unix(int64(timestamp), 0).Format("2006-01-02")
+}

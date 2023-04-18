@@ -2,9 +2,8 @@ package db
 
 type UniqueView struct {
 	Id         int64  `gorm:"id"`
-	ViewCount  int64  `gorm:"view_count"`
-	CreateTime uint32 `gorm:"create_time"`
-	UpdateTime uint32 `gorm:"update_time"`
+	ViewsCount int64  `gorm:"views_count"`
+	Ctime      uint32 `gorm:"ctime"`
 }
 
 func (UniqueView) TableName() string {

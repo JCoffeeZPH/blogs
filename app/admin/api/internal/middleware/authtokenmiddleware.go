@@ -23,7 +23,7 @@ func NewAuthTokenMiddleware() *AuthTokenMiddleware {
 
 func (m *AuthTokenMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if strings.Contains(r.URL.String(), "users/login") {
+		if strings.Contains(r.URL.String(), "users/login") || strings.Contains(r.URL.String(), "/report") {
 			next(w, r)
 		}
 

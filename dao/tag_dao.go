@@ -9,6 +9,7 @@ import (
 type TagDao interface {
 	Count() int64
 	GetTagsByIds(tagIds []int64) []db.Tag
+	GetAllTags() []db.Tag
 }
 
 type TagDaoImpl struct {
@@ -36,5 +37,13 @@ func (dao *TagDaoImpl) GetTagsByIds(tagIds []int64) []db.Tag {
 		panic(errorx.DBError{Err: err})
 	}
 
+	return tags
+}
+
+func (dao *TagDaoImpl) GetAllTags() []db.Tag {
+	var tags []db.Tag
+	if err := dao.db.Model(&db.Tag{}).Select("id, tag_name").Order("id").Find(&tags).Error; err != nil {
+		panic(errorx.DBError{Err: err})
+	}
 	return tags
 }

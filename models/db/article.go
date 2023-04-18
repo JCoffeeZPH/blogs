@@ -26,3 +26,8 @@ type ArticleWithCategory struct {
 	Article
 	CategoryName string `gorm:"category_name"`
 }
+
+type DateArticleStat struct {
+	Date  string `gorm:"date"`
+	Count int64  `gorm:"count"`
+}

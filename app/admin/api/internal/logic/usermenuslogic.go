@@ -35,7 +35,7 @@ func (l *UserMenusLogic) UserMenus(userId int64) ([]types.GetMenusResponse, erro
 				Path:      menu.Path,
 				Component: menu.Component,
 				Icon:      menu.Icon,
-				Hidden:    menu.IsHidden == 0,
+				Hidden:    menu.IsHidden == 1,
 				OrderNum:  menu.OrderNum,
 				Children:  getMenuById(menu.Id, menus),
 			})

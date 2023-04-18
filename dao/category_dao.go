@@ -33,7 +33,8 @@ func (dao *CategoryDaoImpl) Count() int64 {
 func (dao *CategoryDaoImpl) GetAllCategories() []db.CategoryDetail {
 	//sql := "select category.id, category.category_name,count(article.id) as articleCount from category_tab category left join (select * from article_tab where is_delete = 0 and status in (1,2)) article on category.id = article.category_id group by category.id"
 	var categories []db.CategoryDetail
-	dao.db.Table("category_tab category").Select("category.id as category_id, category.category_name, count(article.id) as article_count").Joins("left join (select * from article_tab where is_delete = 0 and status in (1,2)) article on category.id = article.category_id group by category.id").Scan(&categories)
+	dao.db.Table("category_tab category").Select("category.id as category_id, category.category_name, count(article.id) as article_count").
+		Joins("left join (select * from article_tab where is_delete = 0 and status in (1,2)) article on category.id = article.category_id group by category.id").Order("category.id").Scan(&categories)
 
 	return categories
 }

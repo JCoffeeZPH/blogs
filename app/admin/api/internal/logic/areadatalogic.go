@@ -29,6 +29,8 @@ func NewAreaDataLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AreaData
 func (l *AreaDataLogic) AreaData(req *types.GetAreaDataRequest) ([]*types.GetAreaDataResponse, error) {
 	var data map[string]string
 	if req.Type == constants.DataAreaVisitorType {
+		data = cache.HGetAll(constants.UserAreaDetailKey)
+	} else {
 		data = cache.HGetAll(constants.VisitorsAreaDetailKey)
 	}
 

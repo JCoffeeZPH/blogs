@@ -9,6 +9,8 @@ import (
 type ArticleDao interface {
 	Count(param map[string]interface{}) int64
 	GetAllArticles(current, size int) []db.ArticleWithCategory
+	GetArticlesById(ids []int64) []db.Article
+	GetArticleStatByDate() []db.DateArticleStat
 }
 
 type ArticleDaoImpl struct {
@@ -53,4 +55,31 @@ func (dao *ArticleDaoImpl) GetAllArticles(current, size int) []db.ArticleWithCat
 	}
 
 	return records
+}
+
+func (dao *ArticleDaoImpl) GetArticlesById(ids []int64) []db.Article {
+	var articles []db.Article
+	err := dao.db.Model(&db.Article{}).Select("article_title").Where("id in (?)", ids).Find(&articles).Error
+	if err != nil {
+		panic(errorx.DBError{Err: err})
+	}
+
+	return articles
+}
+
+//SELECT FROM_UNIXTIME(ctime, '%Y-%m-%d') AS date,
+//       COUNT(1)                             AS count
+//FROM article_tab
+//GROUP BY date
+//ORDER BY date DESC;
+
+func (dao *ArticleDaoImpl) GetArticleStatByDate() []db.DateArticleStat {
+	var stat []db.DateArticleStat
+	if err := dao.db.Table("article_tab").
+		Select("FROM_UNIXTIME(ctime, '%Y-%m-%d') AS date, count(1) as count").
+		Group("date").Order("date desc").
+		Find(&stat).Error; err != nil {
+		panic(errorx.DBError{Err: err})
+	}
+	return stat
 }

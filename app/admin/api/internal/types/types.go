@@ -42,7 +42,7 @@ type GetAreaDataResponse struct {
 }
 
 type GetSysInfoResponse struct {
-	ViewCount    int64         `json:"viewCount"`
+	ViewsCount   int64         `json:"viewsCount"`
 	MessageCount int64         `json:"messageCount"`
 	UserCount    int64         `json:"userCount"`
 	ArticleCount int64         `json:"articleCount"`
@@ -62,7 +62,6 @@ type Category struct {
 type Tag struct {
 	Id      int64  `json:"id"`
 	TagName string `json:"tagName"`
-	Count   int64  `json:"count"`
 }
 
 type ArticleStat struct {
