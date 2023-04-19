@@ -39,6 +39,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/",
 					Handler: SysInfoHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/categories/search",
+					Handler: SearchCategoryHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/tags/search",
+					Handler: SearchTagHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/admin"),

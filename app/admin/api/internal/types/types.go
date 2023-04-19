@@ -78,3 +78,13 @@ type ArticleRank struct {
 	ArticleTitle string `json:"articleTitle"`
 	ViewsCount   int64  `json:"viewsCount"`
 }
+
+type SearchCategoryResponse struct {
+	Id           int64  `json:"id"`
+	CategoryName string `json:"categoryName"`
+}
+
+type SearchTagResponse struct {
+	Id      int64  `json:"id"`
+	TagName string `json:"tagName"`
+}

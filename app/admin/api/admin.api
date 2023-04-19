@@ -86,6 +86,16 @@ type (
 		ArticleTitle string `json:"articleTitle"`
 		ViewsCount   int64  `json:"viewsCount"`
 	}
+
+	SearchCategoryResponse {
+		Id           int64  `json:"id"`
+		CategoryName string `json:"categoryName"`
+	}
+
+	SearchTagResponse {
+		Id      int64  `json:"id"`
+		TagName string `json:"tagName"`
+	}
 )
 
 @server(
@@ -108,4 +118,10 @@ service admin-api {
 	
 	@handler SysInfo
 	get / returns(GetSysInfoResponse)
+	
+	@handler SearchCategory
+	get /categories/search returns (SearchCategoryResponse)
+	
+	@handler SearchTag
+	get /tags/search returns (SearchTagResponse)
 }
