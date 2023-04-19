@@ -56,7 +56,7 @@ func getMenuById(menuId int64, menus []db.Menu) []types.GetMenusResponse {
 				Path:      menu.Path,
 				Component: menu.Component,
 				Icon:      menu.Icon,
-				Hidden:    menu.IsHidden == 0,
+				Hidden:    menu.IsHidden == 1,
 				OrderNum:  menu.OrderNum,
 				Children:  getMenuById(menu.Id, menus),
 			})

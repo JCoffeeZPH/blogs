@@ -12,7 +12,7 @@ const (
 	BlogRPCServerName = "blog.rpc"
 
 	UnknownArea = "未知"
-	DefaultArea = "广东省"
+	DefaultArea = "广东"
 	AreaSuffix  = "省"
 
 	DataAreaVisitorType = 1
