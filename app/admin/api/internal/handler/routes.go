@@ -49,6 +49,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/tags/search",
 					Handler: SearchTagHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/articles/images",
+					Handler: UploadImageHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/admin"),

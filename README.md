@@ -5,7 +5,9 @@
 
 [gozero快速构建微服务](https://github.com/zeromicro/zero-doc/blob/main/docs/zero/bookstore.md)
 [gorm使用文档](https://gorm.io/docs/advanced_query.html)
-
+[oss](https://oss.console.aliyun.com/bucket)
+[oss ram用户登录](https://signin.aliyun.com/zhangphh_ram.onaliyun.com/login.htm)
+[oss创建ram账号](https://help.aliyun.com/document_detail/61950.html)
 ## 2、说明
 ### 2.1 缓存
 * 1、redis db0 -> session信息

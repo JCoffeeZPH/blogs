@@ -45,12 +45,12 @@ func MergeMap(dest, src map[interface{}]interface{}) map[interface{}]interface{}
 
 // MarshalObjectToYamlString
 // desc: 序列化对象为 yaml 字符串
-func MarshalObjectToYamlString(obj interface{}) (string, error) {
+func MarshalObjectToYamlString(obj interface{}) ([]byte, error) {
 	bs, err := yaml.Marshal(obj)
 	if err != nil {
-		return "", fmt.Errorf("marshal obj [%#v] faild, err: %v", obj, err)
+		return []byte{}, fmt.Errorf("marshal obj [%#v] faild, err: %v", obj, err)
 	}
-	return string(bs), nil
+	return bs, nil
 }
 
 func MD5(v string) string {

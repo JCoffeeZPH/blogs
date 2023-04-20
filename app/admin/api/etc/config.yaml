@@ -3,18 +3,25 @@ dev:
   Host: 0.0.0.0
   Port: 9999
 
-  Mysql:
-    Host: 127.0.0.1 
-    Port: 3306
-    Username: root
-    Password: zhangphh=520
-    DatabaseName: zhangphh_blogs
+  mysql:
+    host: 127.0.0.1 
+    port: 3306
+    username: root
+    password: zhangphh=520
+    database_name: zhangphh_blogs
   
-  Redis:
-    Host: 127.0.0.1
-    Port: 6379
-    Password: ""
-    DB: 1
-    PoolSize: 10
-    MinIdleConns: 3
-    MaxRetries: 3
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ""
+    db: 1
+    pool_size: 10
+    min_idle_conns: 3
+    max_retries: 3
+  
+  oss:
+    access_key_id: "xxxxxxxx"
+    access_key_secret: "xxxxxxxx"
+    endpoint: "http://oss-cn-beijing.aliyuncs.com"
+    bucket_url: "http://xxxxxxxx"
+    bucket_name: "xxxxxxxx"

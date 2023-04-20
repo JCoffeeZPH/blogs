@@ -124,4 +124,7 @@ service admin-api {
 	
 	@handler SearchTag
 	get /tags/search returns (SearchTagResponse)
+	
+	@handler UploadImage
+	post /articles/images
 }

@@ -23,8 +23,9 @@ func NewAuthTokenMiddleware() *AuthTokenMiddleware {
 
 func (m *AuthTokenMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if strings.Contains(r.URL.String(), "users/login") || strings.Contains(r.URL.String(), "/report") {
+		if strings.Contains(r.URL.String(), "users/login") || strings.Contains(r.URL.String(), "/report") || strings.Contains(r.URL.String(), "/articles/images") {
 			next(w, r)
+			return
 		}
 
 		jwtToken := getJwtToken(r)

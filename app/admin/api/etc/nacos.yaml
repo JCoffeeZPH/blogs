@@ -1,9 +1,9 @@
 dev:
-  Servers:
-    - Addr: 127.0.0.1
-      Port: 8848
-  Group: api-dev
-  DataID: admin-api
-  NamespaceID: d7532de5-68a7-4e3d-abf1-a4344761a064
+  servers:
+    - addr: 127.0.0.1
+      port: 8848
+  group: api-dev
+  data_id: admin-api
+  namespace_id: d7532de5-68a7-4e3d-abf1-a4344761a064
   
-  RPCGroup: rpc-dev
+  rpc_group: rpc-dev

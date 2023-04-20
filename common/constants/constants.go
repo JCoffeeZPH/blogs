@@ -17,6 +17,8 @@ const (
 
 	DataAreaVisitorType = 1
 	DataAreaUserType    = 0
+
+	OSSArticleImagesPath = "articles"
 )
 
 var namespaceMap = map[string]Namespace{

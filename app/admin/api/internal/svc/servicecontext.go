@@ -5,6 +5,7 @@ import (
 	commonConfig "blogs/common/config"
 	"blogs/dao"
 	"blogs/lib/cache"
+	"blogs/lib/oss"
 	"github.com/zeromicro/go-zero/rest"
 )
 
@@ -21,6 +22,7 @@ type ServiceContext struct {
 	UniqueDao   dao.UniqueViewDao
 	TagDao      dao.TagDao
 	CategoryDao dao.CategoryDao
+	OSService   oss.OSService
 }
 
 func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig) *ServiceContext {
@@ -40,5 +42,6 @@ func NewServiceContext(c commonConfig.Config, nc *commonConfig.NacosServerConfig
 		UniqueDao:   dao.NewUniqueViewDao(),
 		TagDao:      dao.NewTagDao(),
 		CategoryDao: dao.NewCategoryDao(),
+		OSService:   oss.NewOSService(),
 	}
 }
